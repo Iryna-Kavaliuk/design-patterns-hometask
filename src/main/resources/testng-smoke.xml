@@ -1,5 +1,5 @@
-<suite name = "All tests" verbose="1" >
-    <test name="All tests" >
+<suite name = "Smoke tests" verbose="1" >
+    <test name="Smoke tests" >
         <parameter name="browser" value="chrome" />
         <packages>
             <package name="test.java.com.epam.ta.test.SearchCloudPricingCalculatorTest" />
