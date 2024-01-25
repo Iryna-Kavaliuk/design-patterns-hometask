@@ -1,9 +1,9 @@
 package com.epam.ta.test;
 
-import com.epam.ta.model.CloudProduct;
+import com.epam.ta.cloudProductFactory.ComputeEngineProduct;
 import com.epam.ta.page.GoogleCloudHomePage;
 import com.epam.ta.page.GoogleCloudPricingCalculatorPage;
-import com.epam.ta.service.CloudProductCreator;
+import com.epam.ta.service.ComputeEngineProductCreator;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -14,8 +14,6 @@ import static com.epam.ta.test.SearchCloudPricingCalculatorTest.SEARCH_TERM;
 public class GoogleCloudPricingCalculatorTest extends CommonConditions {
     private GoogleCloudHomePage homePage;
     private GoogleCloudPricingCalculatorPage calculatorPage;
-
-    private static final String MANUALLY_GOT_ESTIMATION = "1,840.40 / mo";
 
     @BeforeMethod
     public void browserSetup() {
@@ -29,15 +27,16 @@ public class GoogleCloudPricingCalculatorTest extends CommonConditions {
         String targetLink = homePage.findTargetingLinkInSearchResults(RESULTING_TERM);
         calculatorPage = homePage.navigateWithTargetingLinkFromSearchResults(targetLink);
         calculatorPage.openPage();
+        calculatorPage.closeCookiesAlert();
         Assert.assertTrue(calculatorPage.isPageOpened(), "Google Cloud Calculator is failed to open");
     }
 
-    @Test(description = "Check estimation price is calculated correctly", dependsOnMethods = "GCPCalculatorIsOpenFromSearch")
+    @Test(description = "Check estimation price is calculated correctly for Compute Engine",
+        dependsOnMethods = "GCPCalculatorIsOpenFromSearch")
     public void GCPCalculatorPriceEstimatingTest() throws InterruptedException {
-        calculatorPage.closeCookiesAlert();
 
-        CloudProduct testProduct = CloudProductCreator.withAllDataFromProperty();
-        calculatorPage.activateProductType(testProduct.getComputeEngine());
+        ComputeEngineProduct testProduct = (ComputeEngineProduct)ComputeEngineProductCreator.withAllDataFromProperty();
+        calculatorPage.activateProductType(testProduct.getProductType());
         calculatorPage.enterNumberOfInstances(testProduct.getNumberOfInstances());
         calculatorPage.enterOperatingSystems(testProduct.getOperatingSystem());
         calculatorPage.enterProvisioningModel(testProduct.getProvisioningModel());
@@ -51,7 +50,7 @@ public class GoogleCloudPricingCalculatorTest extends CommonConditions {
         calculatorPage.enterCommittedUsage(testProduct.getCommittedUsage());
         calculatorPage.clickAddToEstimateButton();
 
-        Assert.assertEquals(calculatorPage.getEstimationResult(), MANUALLY_GOT_ESTIMATION,
+        Assert.assertEquals(calculatorPage.getEstimationResult(), testProduct.calculateProductPrice(),
                 "Estimations got manually and automatically are different!");
     }
 

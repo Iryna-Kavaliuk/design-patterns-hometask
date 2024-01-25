@@ -19,7 +19,7 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage{
     }
 
     By freeTrialButton = By.xpath("//a[@track-type = 'freeTrial']");
-    By cookiesAlert = By.className("devsite-snackbar-action");
+    By cookiesAlert = By.className("glue-cookie-notification-bar__accept");
     By productTypeTabs = By.xpath("//md-tab-item[@role='tab']/div/div/div[@class='name']/span");
     By cloudSiteFrame = By.xpath("//article[@id='cloud-site']/devsite-iframe/iframe");
     By myResourcesFrame = By.id("myFrame");
