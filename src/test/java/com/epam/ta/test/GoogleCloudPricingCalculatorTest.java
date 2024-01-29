@@ -3,9 +3,8 @@ package com.epam.ta.test;
 import com.epam.ta.cloudProductFactory.ComputeEngineProduct;
 import com.epam.ta.page.GoogleCloudHomePage;
 import com.epam.ta.page.GoogleCloudPricingCalculatorPage;
-import com.epam.ta.service.ComputeEngineProductCreator;
+import com.epam.ta.service.ComputeEngineProductBuilder;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static com.epam.ta.test.SearchCloudPricingCalculatorTest.RESULTING_TERM;
@@ -15,13 +14,9 @@ public class GoogleCloudPricingCalculatorTest extends CommonConditions {
     private GoogleCloudHomePage homePage;
     private GoogleCloudPricingCalculatorPage calculatorPage;
 
-    @BeforeMethod
-    public void browserSetup() {
-        homePage = new GoogleCloudHomePage(driver);
-    }
-
     @Test(description = "Check Google Cloud Calculator is opened")
     public void GCPCalculatorIsOpenFromSearch() {
+        homePage = new GoogleCloudHomePage(driver);
         homePage.openPage();
         homePage.enterSearchTerm(SEARCH_TERM);
         String targetLink = homePage.findTargetingLinkInSearchResults(RESULTING_TERM);
@@ -35,7 +30,7 @@ public class GoogleCloudPricingCalculatorTest extends CommonConditions {
         dependsOnMethods = "GCPCalculatorIsOpenFromSearch")
     public void GCPCalculatorPriceEstimatingTest() throws InterruptedException {
 
-        ComputeEngineProduct testProduct = (ComputeEngineProduct)ComputeEngineProductCreator.withAllDataFromProperty();
+        ComputeEngineProduct testProduct = (ComputeEngineProduct) ComputeEngineProductBuilder.withAllDataFromProperty();
         calculatorPage.activateProductType(testProduct.getProductType());
         calculatorPage.enterNumberOfInstances(testProduct.getNumberOfInstances());
         calculatorPage.enterOperatingSystems(testProduct.getOperatingSystem());

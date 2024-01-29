@@ -2,7 +2,7 @@ package com.epam.ta.cloudProductFactory;
 
 import com.epam.ta.service.TestDataReader;
 
-import static com.epam.ta.service.ComputeEngineProductCreator.OPERATING_SYSTEM;
+import static com.epam.ta.service.ComputeEngineProductBuilder.OPERATING_SYSTEM;
 
 public class CloudProductFactory {
 
@@ -21,12 +21,6 @@ public class CloudProductFactory {
         return null;
       }
     }
-  }
-
-  public static String getProductPrice(String productType) {
-    CloudProduct product = createProduct(productType);
-    String productPrice = product.calculateProductPrice();
-    return productPrice;
   }
 
 }

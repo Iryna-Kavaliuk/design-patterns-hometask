@@ -4,13 +4,14 @@ import com.epam.ta.utils.Waiter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class GoogleCloudPricingCalculatorPage extends AbstractPage{
+public class GoogleCloudPricingCalculatorPage extends AbstractPage implements LocatorService,
+    NavigatorService,
+    AlertService {
     private static final String CALCULATOR_PAGE_LEGACY_URL  = "https://cloud.google.com/products/calculator-legacy";
     private final Logger logger = LogManager.getRootLogger();
     private WebElement currentElement;
@@ -19,7 +20,6 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage{
     }
 
     By freeTrialButton = By.xpath("//a[@track-type = 'freeTrial']");
-    By cookiesAlert = By.className("glue-cookie-notification-bar__accept");
     By productTypeTabs = By.xpath("//md-tab-item[@role='tab']/div/div/div[@class='name']/span");
     By cloudSiteFrame = By.xpath("//article[@id='cloud-site']/devsite-iframe/iframe");
     By myResourcesFrame = By.id("myFrame");
@@ -42,10 +42,6 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage{
 
     By estimationResultContent = By.xpath("//md-card-content[@id='resultBlock']//h2[@class='md-flex ng-binding ng-scope']");
     By estimationResultFullContent = By.xpath("//*[@id=\"resultBlock\"]/md-card//b[@class='ng-binding']");
-
-    public void closeCookiesAlert() {
-        driver.findElement(cookiesAlert).click();
-    }
 
     @Override
     public GoogleCloudPricingCalculatorPage openPage() {
@@ -190,7 +186,7 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage{
         currentElement.click();
     }
 
-    public void clickAddToEstimateButton() throws InterruptedException {
+    public void clickAddToEstimateButton() {
         scrollToElement(dataCenterLocationInput);
         clickToElement(addToEstimateButton);
     }
@@ -202,20 +198,6 @@ public class GoogleCloudPricingCalculatorPage extends AbstractPage{
         String estimation = currentElement.getText();
         logger.info("Estimation is test product is calculated:" + estimation);
         return estimation;
-    }
-
-    private void scrollToElement(By by) {
-        WebElement element = driver.findElement(by);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-    }
-
-    private void clickToElement(By by) {
-        WebElement element = driver.findElement(by);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-    }
-
-    private String buildLocatorByText(String valuePart) {
-        return String.format("//div[contains(@id, 'select_container')]//div[text()[contains(.,'%s')]]", valuePart);
     }
 
 }

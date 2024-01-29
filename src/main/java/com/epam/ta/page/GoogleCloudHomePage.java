@@ -11,7 +11,7 @@ import java.util.List;
 
 import static com.epam.ta.utils.Waiter.waitForElementLocatedBy;
 
-public class GoogleCloudHomePage extends AbstractPage{
+public class GoogleCloudHomePage extends AbstractPage implements NavigatorService, AlertService {
 
     private static final String HOMEPAGE_URL = "https://cloud.google.com/ ";
     private final Logger logger = LogManager.getRootLogger();

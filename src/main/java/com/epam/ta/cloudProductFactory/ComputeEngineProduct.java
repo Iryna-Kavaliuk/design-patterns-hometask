@@ -2,7 +2,7 @@ package com.epam.ta.cloudProductFactory;
 
 import com.epam.ta.service.TestDataReader;
 
-import static com.epam.ta.service.ComputeEngineProductCreator.*;
+import static com.epam.ta.service.ComputeEngineProductBuilder.*;
 
 public class ComputeEngineProduct extends CloudProduct {
   private int numberOfInstances;

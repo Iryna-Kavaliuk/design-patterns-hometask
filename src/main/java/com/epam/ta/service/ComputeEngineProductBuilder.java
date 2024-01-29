@@ -3,7 +3,7 @@ package com.epam.ta.service;
 import com.epam.ta.cloudProductFactory.CloudProductFactory;
 import com.epam.ta.cloudProductFactory.CloudProduct;
 
-public class ComputeEngineProductCreator {
+public class ComputeEngineProductBuilder {
 
     public static final String COMPUTE_ENGINE_AREA = "testdata.product.compute-engine";
     public static final String OPERATING_SYSTEM = "testdata.product.os";
